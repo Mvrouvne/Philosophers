@@ -6,106 +6,126 @@
 /*   By: machaiba <machaiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:30:45 by machaiba          #+#    #+#             */
-/*   Updated: 2023/04/05 00:38:57 by machaiba         ###   ########.fr       */
+/*   Updated: 2023/04/10 01:59:21 by machaiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	get_time(void)
-{
-	struct timeval	time;
-	gettimeofday(&time, NULL);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
-}
 void	*thread(void *arg)
 {
-	t_all *all;
-	all = (t_all*)arg;
-	int	left;
+	t_all	*all;
 
-	// get_time();
-	gettimeofday(&all->start, NULL);
-	all->start_time  = (all->start.tv_sec * 1000) + (all->start.tv_usec / 1000);
-	while (1)
-	{
-		gettimeofday(&all->end, NULL);
-		all->end_time = (all->end.tv_sec * 1000) + (all->end.tv_usec / 1000);
-		pthread_mutex_lock(all->left_fork);
-		print_fork(all);
-		pthread_mutex_lock(all->right_fork);
-		print_fork(all);
-		// printf("%ld ms %d is eating\n", get_time() - all->start_time, all->id);
-		print_eat(all);
-		// printf("tt_eat = %d\n", all->tt_eat);
-		usleep(all->tt_eat * 1000);
-		pthread_mutex_unlock(all->left_fork);
-		pthread_mutex_unlock(all->right_fork);
-		print_sleep(all);
-		usleep(all->tt_eat * 1000);
-	
-		// break ;
-	}
-	return NULL;
+	all = (t_all *)arg;
+	all->ate = 0;
+	pthread_mutex_lock(all->time);
+	all->start_time = get_time();
+	pthread_mutex_unlock(all->time);
+	thread2(all);
+	return (NULL);
 }
 
-int main(int ac, char **av)
+int	main_work3(t_all **all, int ac, int x)
 {
-	t_all	**all;
-	int		x;
-
-	if (ac == 4 || ac == 5)
+	while (1)
 	{
-		all = malloc(sizeof(t_all*) * ft_atoi(av[1]));
-		x = 0;
-		ac = 0;
-		while(x < ft_atoi(av[1]))
-		{
-			all[x] = malloc(sizeof(t_all));
-			x++;
-		}
-		x = 0;
-		(*all)->num = ft_atoi(av[1]);
-		if ((*all)->num == 1)
-		{
-			printf("%d died\n", (*all)->num);
-			exit(0);
-		}
-		while(x < (*all)->num)
-		{
-			all[x]->left_fork = malloc(sizeof(pthread_mutex_t));
-			pthread_mutex_init(all[x]->left_fork, NULL);
-			x++;	
-		}
 		x = 0;
 		while (x < (*all)->num)
 		{
-			all[x]->right_fork = all[(x + 1) % (*all)->num]->left_fork;
+			pthread_mutex_lock((*all)->time);
+			if (ac == 6)
+			{
+				pthread_mutex_lock((*all)->print);
+				if (checkifate(all[x]) && x + 1 == (*all)->num)
+					return (1);
+				pthread_mutex_unlock((*all)->print);
+			}
+			if (get_time() - all[x]->eating >= (*all)->tt_die)
+			{
+				print_die(all[x]);
+				return (1);
+			}
 			x++;
+			pthread_mutex_unlock((*all)->time);
 		}
-		x = 0;
-		while (x < (*all)->num)
-		{
-			all[x]->tt_die = ft_atoi(av[2]);
-			all[x]->tt_eat = ft_atoi(av[3]);
-			if (ac == 5)
-				all[x]->tt_sleep = ft_atoi(av[4]);
-			all[x]->id = x + 1;
-			all[x]->philosopher = malloc(sizeof(pthread_t));
-			if (pthread_create(all[x]->philosopher, NULL, &thread, &*all[x]))
-				exit(1);
-			// printf("%ld ms %d is thinking\n", (*all)->end_time - (*all)->start_time, (*all)->id);
-			// usleep(10000);
-			x++;
-		}
-		x = 0;
-		while (x < (*all)->num)
-		{
-			if (pthread_join(*all[x]->philosopher, NULL))
-				exit(1);
-			x++;
-		}
-		pthread_mutex_destroy((*all)->left_fork);
 	}
-	printf("4 Arguments required! (6 optional)");
+	return (0);
+}
+
+int	main_work2(t_all **all, int ac, char **av)
+{
+	pthread_mutex_t	*print;
+	pthread_mutex_t	*time;
+	int				x;
+
+	print = malloc(sizeof(pthread_mutex_t));
+	time = malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init(time, NULL);
+	pthread_mutex_init(print, NULL);
+	x = 0;
+	while (x < (*all)->num)
+	{
+		if (ac == 6)
+			all[x]->n_eating = ft_atoi(av[5]);
+		all[x]->id = x + 1;
+		all[x]->philosopher = malloc(sizeof(pthread_t));
+		all[x]->eating = get_time();
+		all[x]->print = print;
+		all[x]->time = time;
+		if (pthread_create(all[x]->philosopher, NULL, &thread, &*all[x]))
+			return (1);
+		usleep(100);
+		x++;
+	}
+	return (0);
+}
+
+void	main_work1(t_all **all, char **av)
+{
+	int	x;
+
+	x = 0;
+	while (x < ft_atoi(av[1]))
+	{
+		all[x] = malloc(sizeof(t_all));
+		x++;
+	}
+	x = 0;
+	(*all)->num = ft_atoi(av[1]);
+	while (x < (*all)->num)
+	{
+		all[x]->tt_die = ft_atoi(av[2]);
+		all[x]->tt_eat = ft_atoi(av[3]);
+		all[x]->tt_sleep = ft_atoi(av[4]);
+		all[x]->left_fork = malloc(sizeof(pthread_mutex_t));
+		pthread_mutex_init(all[x]->left_fork, NULL);
+		x++;
+	}
+	x = 0;
+	while (x < (*all)->num)
+	{
+		all[x]->right_fork = all[(x + 1) % (*all)->num]->left_fork;
+		x++;
+	}
+}
+
+int	main(int ac, char **av)
+{
+	t_all			**all;
+	int				x;
+
+	if (ac == 5 || ac == 6)
+	{
+		if (parcing(av))
+			return (0);
+		all = malloc(sizeof(t_all *) * ft_atoi(av[1]));
+		main_work1(all, av);
+		if (main_work2(all, ac, av) == 1)
+			return (1);
+		x = 0;
+		if (main_work3(all, ac, x))
+			return (1);
+	}
+	else
+		printf("4 Arguments required! (6 optional)");
 }

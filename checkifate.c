@@ -1,40 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   checkifate.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: machaiba <machaiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/28 16:50:15 by machaiba          #+#    #+#             */
-/*   Updated: 2023/04/10 01:55:34 by machaiba         ###   ########.fr       */
+/*   Created: 2023/04/09 02:57:13 by machaiba          #+#    #+#             */
+/*   Updated: 2023/04/10 01:55:24 by machaiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_atoi(const char *str)
+int	checkifate(t_all *all)
 {
-	int					a;
-	int					b;
-	unsigned long int	c;
-
-	a = 0;
-	b = 1;
-	c = 0;
-	while ((str[a] >= 9 && str[a] <= 13) || str[a] == ' ')
-		a++;
-	if (str[a] == '-')
-	{
-		b = b * -1;
-		a++;
-	}
-	else if (str[a] == '+')
-		a++;
-	while (str[a] >= '0' && str[a] <= '9')
-		c = (c * 10) + (str[a++] - '0');
-	if (c > __LONG_MAX__ && b == 1)
-		return (-1);
-	else if (c > __LONG_MAX__ && b == -1)
+	if (all->ate == all->n_eating)
+		return (1);
+	else
 		return (0);
-	return (c * b);
 }

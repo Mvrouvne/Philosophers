@@ -6,18 +6,18 @@
 /*   By: machaiba <machaiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:30:55 by machaiba          #+#    #+#             */
-/*   Updated: 2023/04/05 00:37:13 by machaiba         ###   ########.fr       */
+/*   Updated: 2023/04/10 02:01:12 by machaiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef PHILO_H
+#ifndef PHILO_H
 # define PHILO_H
 
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <pthread.h>
-#include <sys/time.h>
+# include <sys/time.h>
 
 typedef struct philo
 {
@@ -25,29 +25,34 @@ typedef struct philo
 	pthread_t		*philosopher;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	*time;
+	pthread_mutex_t	*print;
 	int				num;
 	struct timeval	start;
 	struct timeval	end;
-	long	start_time;
-	long	end_time;
-	int	tt_die;
-	int	tt_eat;
-	int	tt_sleep;
-	int	n_eating;
-}   t_all;
+	long			start_time;
+	long			end_time;
+	unsigned long	tt_die;
+	unsigned long	tt_eat;
+	unsigned long	tt_sleep;
+	unsigned long	n_eating;
+	unsigned long	eating;
+	unsigned long	eat_time;
+	unsigned long	sleep_time;
+	unsigned long	ate;
+}	t_all;
 
-// typedef struct	philo2
-// {
-// 	struct timeval	start;
-// 	struct timeval	end;
-// 	long long	elapsed;
-	
-// }	t_time;
-
-int	ft_atoi(const char *str);
-void	print_eat(t_all *all);
-void	print_sleep(t_all *all);
-void	print_fork(t_all *all);
-long	get_time(void);
+int				ft_atoi(const char *str);
+void			print_eat(t_all *all);
+void			print_sleep(t_all *all);
+void			print_fork(t_all *all);
+void			print_think(t_all *all);
+unsigned long	get_time(void);
+void			print_die(t_all *all);
+void			ft_usleep(unsigned long time);
+int				parcing(char **av);
+int				checkifate(t_all *all);
+unsigned long	get_time(void);
+void			thread2(t_all *all);
 
 #endif
