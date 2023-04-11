@@ -6,7 +6,7 @@
 /*   By: machaiba <machaiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:30:45 by machaiba          #+#    #+#             */
-/*   Updated: 2023/04/10 01:59:21 by machaiba         ###   ########.fr       */
+/*   Updated: 2023/04/11 00:55:07 by machaiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,13 +116,15 @@ int	main(int ac, char **av)
 
 	if (ac == 5 || ac == 6)
 	{
-		if (parcing(av))
+		x = 1;
+		if (parcing(av, x))
+			return (0);
+		if (parcing2(av))
 			return (0);
 		all = malloc(sizeof(t_all *) * ft_atoi(av[1]));
 		main_work1(all, av);
 		if (main_work2(all, ac, av) == 1)
 			return (1);
-		x = 0;
 		if (main_work3(all, ac, x))
 			return (1);
 	}
