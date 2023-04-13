@@ -6,7 +6,7 @@
 /*   By: machaiba <machaiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:30:55 by machaiba          #+#    #+#             */
-/*   Updated: 2023/04/11 00:54:14 by machaiba         ###   ########.fr       */
+/*   Updated: 2023/04/13 03:19:33 by machaiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ unsigned long	get_time(void);
 void			print_die(t_all *all);
 void			ft_usleep(unsigned long time);
 int				parcing(char **av, int x);
-int				checkifate(t_all *all);
+int				checkifate(t_all **all);
 unsigned long	get_time(void);
 void			thread2(t_all *all);
 int				parcing2(char **av);

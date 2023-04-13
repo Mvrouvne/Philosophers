@@ -6,7 +6,7 @@
 /*   By: machaiba <machaiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:30:45 by machaiba          #+#    #+#             */
-/*   Updated: 2023/04/11 00:55:07 by machaiba         ###   ########.fr       */
+/*   Updated: 2023/04/13 03:47:17 by machaiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main_work3(t_all **all, int ac, int x)
 			if (ac == 6)
 			{
 				pthread_mutex_lock((*all)->print);
-				if (checkifate(all[x]) && x + 1 == (*all)->num)
+				if (checkifate(all))
 					return (1);
 				pthread_mutex_unlock((*all)->print);
 			}
@@ -123,10 +123,11 @@ int	main(int ac, char **av)
 			return (0);
 		all = malloc(sizeof(t_all *) * ft_atoi(av[1]));
 		main_work1(all, av);
-		if (main_work2(all, ac, av) == 1)
+		if ((main_work2(all, ac, av) == 1) || (main_work3(all, ac, x)))
+		{
+			free(all);
 			return (1);
-		if (main_work3(all, ac, x))
-			return (1);
+		}
 	}
 	else
 		printf("4 Arguments required! (6 optional)");

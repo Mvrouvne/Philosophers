@@ -6,7 +6,7 @@
 /*   By: machaiba <machaiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 23:45:55 by machaiba          #+#    #+#             */
-/*   Updated: 2023/04/11 00:54:04 by machaiba         ###   ########.fr       */
+/*   Updated: 2023/04/13 00:03:54 by machaiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	parcing2(char **av)
 
 	x = 0;
 	y = 0;
-	if (ft_atoi(av[1]) == 0)
+	if ((av[1] && ft_atoi(av[1]) == 0)
+		|| (av[5] && av[5][0] == '0' && av[5][1] == '\0'))
 	{
 		printf("Error\n");
 		return (1);
