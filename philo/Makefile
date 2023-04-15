@@ -6,13 +6,13 @@
 #    By: machaiba <machaiba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/18 16:31:06 by machaiba          #+#    #+#              #
-#    Updated: 2023/04/13 03:47:36 by machaiba         ###   ########.fr        #
+#    Updated: 2023/04/14 18:11:45 by machaiba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=thread -g3
+CFLAGS = -Wall -Wextra -Werror
 
 SRCS = philo.c\
 		ft_atoi.c\

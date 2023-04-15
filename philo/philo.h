@@ -6,7 +6,7 @@
 /*   By: machaiba <machaiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:30:55 by machaiba          #+#    #+#             */
-/*   Updated: 2023/04/13 03:19:33 by machaiba         ###   ########.fr       */
+/*   Updated: 2023/04/14 18:10:10 by machaiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <limits.h>
 
 typedef struct philo
 {
@@ -27,7 +28,7 @@ typedef struct philo
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*time;
 	pthread_mutex_t	*print;
-	int				num;
+	unsigned long	num;
 	struct timeval	start;
 	struct timeval	end;
 	long			start_time;
@@ -40,9 +41,10 @@ typedef struct philo
 	unsigned long	eat_time;
 	unsigned long	sleep_time;
 	unsigned long	ate;
+	unsigned long	first_time;
 }	t_all;
 
-int				ft_atoi(const char *str);
+unsigned long	ft_atoi(const char *str);
 void			print_eat(t_all *all);
 void			print_sleep(t_all *all);
 void			print_fork(t_all *all);
