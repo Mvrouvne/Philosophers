@@ -6,7 +6,7 @@
 /*   By: machaiba <machaiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:30:55 by machaiba          #+#    #+#             */
-/*   Updated: 2023/04/14 18:10:10 by machaiba         ###   ########.fr       */
+/*   Updated: 2023/04/17 01:42:47 by machaiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,10 @@ typedef struct philo
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*time;
 	pthread_mutex_t	*print;
-	unsigned long	num;
+	int				num;
 	struct timeval	start;
 	struct timeval	end;
-	long			start_time;
-	long			end_time;
+	unsigned long	start_time;
 	unsigned long	tt_die;
 	unsigned long	tt_eat;
 	unsigned long	tt_sleep;
@@ -44,7 +43,7 @@ typedef struct philo
 	unsigned long	first_time;
 }	t_all;
 
-unsigned long	ft_atoi(const char *str);
+int				ft_atoi(const char *str);
 void			print_eat(t_all *all);
 void			print_sleep(t_all *all);
 void			print_fork(t_all *all);

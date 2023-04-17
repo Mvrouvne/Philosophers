@@ -6,7 +6,7 @@
 /*   By: machaiba <machaiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:30:45 by machaiba          #+#    #+#             */
-/*   Updated: 2023/04/14 14:41:28 by machaiba         ###   ########.fr       */
+/*   Updated: 2023/04/17 01:47:17 by machaiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*thread(void *arg)
 	return (NULL);
 }
 
-int	main_work3(t_all **all, int ac, unsigned long x)
+int	main_work3(t_all **all, int ac, int x)
 {
 	while (1)
 	{
@@ -56,7 +56,7 @@ int	main_work2(t_all **all, int ac, char **av)
 {
 	pthread_mutex_t	*print;
 	pthread_mutex_t	*time;
-	unsigned long	x;
+	int				x;
 
 	print = malloc(sizeof(pthread_mutex_t));
 	time = malloc(sizeof(pthread_mutex_t));
@@ -82,7 +82,7 @@ int	main_work2(t_all **all, int ac, char **av)
 
 int	main_work1(t_all **all, char **av)
 {
-	unsigned long	x;
+	int	x;
 
 	x = 0;
 	(*all)->num = ft_atoi(av[1]);
@@ -110,8 +110,8 @@ int	main_work1(t_all **all, char **av)
 
 int	main(int ac, char **av)
 {
-	t_all			**all;
-	unsigned long	x;
+	t_all	**all;
+	int		x;
 
 	if (ac == 5 || ac == 6)
 	{

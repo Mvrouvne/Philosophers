@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: machaiba <machaiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/15 03:12:28 by machaiba          #+#    #+#             */
-/*   Updated: 2023/04/15 03:21:04 by machaiba         ###   ########.fr       */
+/*   Created: 2023/04/06 23:45:55 by machaiba          #+#    #+#             */
+/*   Updated: 2023/04/17 00:41:35 by machaiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_bonus.h"
+#include "philo.h"
 
 int	parcing2(char **av)
 {
@@ -19,8 +19,9 @@ int	parcing2(char **av)
 
 	x = 0;
 	y = 0;
-	if (ft_atoi(av[2]) == 5 || ft_atoi(av[3]) == 5
-		|| ft_atoi(av[4]) == 5 || (av[5] && ft_atoi(av[5]) == 5))
+	if (ft_atoi(av[2]) == -1 || ft_atoi(av[3]) == -1
+		|| ft_atoi(av[4]) == -1 || (av[5] && ft_atoi(av[5]) == -1)
+		|| (av[5] && ft_atoi(av[5]) == 0) || ft_atoi(av[1]) == 0)
 	{
 		printf("Error\n");
 		return (1);
